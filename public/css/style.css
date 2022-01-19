@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
+
 
 main{
     display: flex;
@@ -95,3 +98,18 @@ a.show #user-fa-custom  i  {
 #main-content{
     margin-top:80px ;
 }
+.main-title{
+    justify-content: center;
+    text-align: center;
+
+    font-family: 'Cairo', sans-serif;
+    font-size: 33px;
+}
+
+
+/* Add Product Table */
+.table-shadow{
+
+}
+
+/* End Add Product Table */

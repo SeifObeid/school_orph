@@ -10,14 +10,21 @@
         </a>
         <ul class="dropdown-menu  px-1 py-2 me-sm-n4  " aria-labelledby="dropdownMenuButton" data-bs-popper="none">
             <li class="mb-2">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
+                <a class="dropdown-item border-radius-md" href='{{route( Request::segment(1).".product.index") }}'>
+
 
                     <p class="text-xs text-secondary mb-0 py-1">
                         <span style=" color: rgb(0, 172, 43);">
                             <i class="fas fa-plus-circle"></i>
                         </span>
-                        <span style="padding-left: 10px">أضافة فرع جديد
+                        <span style="padding-left: 10px">
+
+                            أضافة فرع جديد
+
+
                         </span>
+
+
                     </p>
 
                 </a>

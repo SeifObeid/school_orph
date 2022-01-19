@@ -20,7 +20,7 @@ class CreateProductsEntriesTable extends Migration
 
 
 
-            $table->foreignId('sub_category_id')->constrained("sub_categories")->cascadeOnDelete();
+            // $table->foreignId('sub_category_id')->constrained("sub_categories")->cascadeOnDelete();
             $table->foreignId('product_id')->constrained("products")->cascadeOnDelete();
             $table->foreignId('entry_id')->constrained("entries")->cascadeOnDelete();
 

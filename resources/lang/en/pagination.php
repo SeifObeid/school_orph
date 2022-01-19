@@ -16,4 +16,24 @@ return [
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
 
+    'carpentry'=>'نجارة',
+
+
+    'upholstery-and-decoration'=>'تنجيد وديكور',
+    'typography'=>'طباعة',
+    'metal-forming'=>'تشكيل معادن',
+    'mechatronics'=>'ميكاترونكس',
+    'conditioning-and-cooling'=>'تكييف وتبريد',
+    'electricity'=>'كهرباء',
+    'public-administration'=>'الإدارة العامة',
+    'elementary-school'=>'المدرسة الاساسية',
+    'secondary-school'=>'المدرسة الثانوية',
+    'kindergarten'=>'رياض الاطفال',
+    'kitchen'=>'المطبخ',
+    'dorm'=>'السكن الداخلي',
+
+
+
+
+
 ];
