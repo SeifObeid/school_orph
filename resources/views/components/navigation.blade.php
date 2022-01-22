@@ -1,5 +1,5 @@
 @if (Route::has('login'))
-<div class=" navbar navbar-custom  top-0 left-0 px-6 py-2 sm:block ">
+<div class=" navbar navbar-custom  top-0 left-0 px-6 py-2 sm:block upper-nav">
     @auth
     <div class="nav-item dropdown pe-2 d-flex align-items-center">
         <a href="javascript:;" class="nav-link text-body p-0 " id="dropdownMenuButton" data-bs-toggle="dropdown"

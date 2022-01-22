@@ -72,17 +72,20 @@
                     {{-- last(request()->segments()) --}}
                     {{ __('pagination.'.Request::segment(1) ) ;}}
                 </div>
+                <x-inner-navigation />
+
                 @yield("content")
             </div>
         </div>
         @include('layouts.sidebar')
-
         @stack('scripts')
-
 
 
     </main>
 
 </body>
+<script>
+    $('html').css('overflow', 'hidden');
+</script>
 
 </html>

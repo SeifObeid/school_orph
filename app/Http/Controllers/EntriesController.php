@@ -11,6 +11,6 @@ class EntriesController extends Controller
     public function index()
     {
 
-        return view('core.inputs');
+        return view('core.entries');
     }
 }

@@ -27,8 +27,7 @@
                         <th>رقم النوع</th>
                         <th>اسم النوع</th>
                         <th>وحدة النوع</th>
-                        <th>
-
+                        <th>العمليات</th>
                     </tr>
                 </thead>
             </table>
@@ -46,16 +45,18 @@
                         method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group mt-3">
-                            <label class="float-right " for="name" class="col-sm-2 control-label">اسم النوع</label>
+                            <label class="float-right " for="product_name" class="col-sm-2 control-label">اسم
+                                النوع</label>
                             <div class="col-sm-12">
-                                <input dir="rtl" type="text" class="form-control" id="name" name="name"
+                                <input dir="rtl" type="text" class="form-control" id="product_name" name="product_name"
                                     placeholder="ادخل اسم النوع" maxlength="50" required="">
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <label class="float-right " for="name" class="col-sm-2 control-label">وحدة النوع</label>
+                            <label class="float-right " for="product_unit" class="col-sm-2 control-label">وحدة
+                                النوع</label>
                             <div class="col-sm-12">
-                                <input dir="rtl" type="email" class="form-control" id="email" name="email"
+                                <input dir="rtl" type="text" class="form-control" id="product_unit" name="product_unit"
                                     placeholder="ادخل وحدة النوع" maxlength="50" required="">
                             </div>
                         </div>
@@ -91,19 +92,19 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
             });
-            console.log("{{ url()->current() }}");
+            console.log("{{route('public-administration.product.edit') }}");
             $('#product-datatable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ url()->current() }}",
-                    columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'product_name', name: 'product_name' },
-                    { data: 'product_unit', name: 'product_unit' },
-                    {data: 'action', name: 'action', orderable: false},
-                    ],
-                    order: [[0, 'desc']]
-                    });
+                            processing: true,
+                            serverSide: true,
+                            ajax: "{{ url()->current() }}",
+                            columns: [
+                            { data: 'id', name: 'id' },
+                            { data: 'product_name', name: 'product_name' },
+                            { data: 'product_unit', name: 'product_unit' },
+                            {data: 'action', name: 'action', orderable: false},
+                            ],
+                            order: [[0, 'desc']]
+                            });
                     });
             function add(){
                     $('#ProductForm').trigger("reset");
@@ -112,18 +113,19 @@
                     $('#id').val('');
             }
             function editFunc(id){
+                console.log("we are in edit");
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('edit-company') }}",
+                    url: "{{ route(Request::segment(1).'.product.edit') }}",
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
-                            $('#ProductModal').html("Edit Company");
+                            $('#ProductModal').html("تعديل نوع");
                             $('#product-modal').modal('show');
                             $('#id').val(res.id);
-                            $('#name').val(res.name);
-                            $('#address').val(res.address);
-                            $('#email').val(res.email);
+                            $('#product_name').val(res.product_name);
+                            $('#product_unit').val(res.product_unit);
+
                             }
                     });
             }
@@ -131,24 +133,27 @@
                         if (confirm("Delete Record?") == true) {
                         var id = id;
                         // ajax
-                        $.ajax({
-                        type:"POST",
-                        url: "{{ url('delete-company') }}",
-                        data: { id: id },
-                        dataType: 'json',
-                        success: function(res){
-                        var oTable = $('#product-datatable').dataTable();
-                        oTable.fnDraw(false);
-                        }
-                        });
-                        }
+                            $.ajax({
+                            type:"POST",
+                            url: "{{ route(Request::segment(1).'.product.destroy') }}",
+                            data: { id: id },
+                            dataType: 'json',
+                            success: function(res){
+                                var oTable = $('#product-datatable').dataTable();
+                                oTable.fnDraw(false);
+                                }
+                                });
+                            }
                 }
                 $('#ProductForm').submit(function(e) {
                         e.preventDefault();
+
+
                         var formData = new FormData(this);
+
                         $.ajax({
                         type:'POST',
-                        url: "{{ url('store-company')}}",
+                        url: "{{ route(Request::segment(1).'.product.store')}}",
                         data: formData,
                         cache:false,
                         contentType: false,
