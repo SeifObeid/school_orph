@@ -72,7 +72,9 @@
                     {{-- last(request()->segments()) --}}
                     {{ __('pagination.'.Request::segment(1) ) ;}}
                 </div>
+                @if (Request::segment(1) !== "suppliers")
                 <x-inner-navigation />
+                @endif
 
                 @yield("content")
             </div>

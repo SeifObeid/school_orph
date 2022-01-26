@@ -9,6 +9,7 @@
             </span>
         </a>
         <ul class="dropdown-menu  px-1 py-2 me-sm-n4  " aria-labelledby="dropdownMenuButton" data-bs-popper="none">
+            @if (Request::segment(1) !== "suppliers")
             <li class="mb-2">
                 <a class="dropdown-item border-radius-md" href='{{route( Request::segment(1).".product.index") }}'>
 
@@ -29,7 +30,29 @@
 
                 </a>
             </li>
+            @endif
 
+            <li class="mb-2">
+                <a class="dropdown-item border-radius-md" href='{{route("suppliers.index") }}'>
+
+                    <p class="text-xs text-secondary mb-0 py-1">
+                        <span style=" color: rgb(0, 172, 43);">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                        <span style="padding-left: 10px">
+
+                            أضافة مورد جديد
+
+
+                        </span>
+
+
+                    </p>
+
+                </a>
+            </li>
+
+            <hr>
             <li class="mb-2">
                 <a class="dropdown-item border-radius-md" href="javascript:;">
 

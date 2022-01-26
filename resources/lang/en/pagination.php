@@ -31,6 +31,7 @@ return [
     'kindergarten'=>'رياض الاطفال',
     'kitchen'=>'المطبخ',
     'dorm'=>'السكن الداخلي',
+    'suppliers'=>'الموردين',
 
 
 

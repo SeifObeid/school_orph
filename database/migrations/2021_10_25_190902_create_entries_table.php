@@ -15,16 +15,16 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->longText('note');
 
             $table->string('invoice_number');
             $table->date('date');
 
-            $table->boolean('setting_record');
+            $table->boolean('entry_insurance');
 
             $table->foreignId('supplier_id')->constrained("suppliers")->cascadeOnDelete();
             $table->foreignId('user_id')->constrained("users")->cascadeOnDelete();
+            $table->foreignId('main_category_id')->constrained("main_categories")->cascadeOnDelete();
 
 
             $table->timestamps();

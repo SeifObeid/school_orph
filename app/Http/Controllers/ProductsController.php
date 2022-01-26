@@ -38,7 +38,7 @@ class ProductsController extends Controller
 
         if(request()->ajax()) {
             $currentURL = request()->segment(1);
-            error_log($currentURL);
+
             return datatables()->of(Products::select('id','product_name','product_unit')->where('main_category_id', $this->main_categories[$currentURL]))
             ->addColumn('action', 'core.add-product-action')
             ->rawColumns(['action'])

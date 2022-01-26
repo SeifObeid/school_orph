@@ -205,3 +205,37 @@ a.show #user-fa-custom  i  {
 
 
 /* End Inner Navigation */
+
+
+/*  entry insurance */
+#entry_insurance{
+
+    display: flex;
+    justify-content: center;
+}
+#entry_insurance .green_insurance{
+    font-family: 'Cairo', sans-serif;
+    font-family: 'El Messiri', sans-serif;
+    display: inline;
+    background-color: rgb(114, 221, 100);
+    border-radius: 20px;
+    border: 2px #24ae09 solid ;
+    padding: 5px 15px;
+    color: rgb(40, 60, 48);
+    font-weight: bold;
+
+}
+#entry_insurance .red_insurance{
+    font-family: 'Cairo', sans-serif;
+    font-family: 'El Messiri', sans-serif;
+    display: inline;
+    background-color: rgb(208, 89, 68);
+    border-radius: 20px;
+    border: 2px #871900 solid ;
+    padding: 5px 15px;
+    color: rgb(63, 57, 56);
+    font-weight: bold;
+
+}
+
+/* End entry insurance */

@@ -3,9 +3,6 @@
 
 @section("content")
 
-we are in entries
-{{last(request()->segments()) }}
 
-
-
+we
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntriesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Redirect;
 
 /*
@@ -28,6 +29,21 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+
+
+Route::prefix('suppliers')->middleware(['auth'])->group(function () {
+
+
+        Route::get('', [SupplierController::class, 'index'])->name("suppliers.index");
+
+        // Route::get('add-product', [ProductsController::class, 'index'])->name("carpentry.product.index");
+        Route::post('store-product', [SupplierController::class, 'store'])->name("suppliers.store");
+        Route::post('edit-product', [SupplierController::class, 'edit'])->name("suppliers.edit");
+        Route::post('delete-product', [SupplierController::class, 'destroy'])->name("suppliers.destroy");
+
+
+
+});
 
 
 Route::prefix('carpentry')->middleware(['auth'])->group(function () {
@@ -155,6 +171,13 @@ Route::prefix('public-administration')->middleware(['auth'])->group(function () 
         Route::get('supplies-log', [EntriesController::class, 'index'])->name("public-administration.supplies-log.index");
         Route::get('outputs', [EntriesController::class, 'index'])->name("public-administration.outputs.index");
         Route::get('damages', [EntriesController::class, 'index'])->name("public-administration.damages.index");
+
+        Route::prefix("entry")->group(function(){
+           Route::get('', [EntriesController::class, 'create'])->name("public-administration.entry.create");
+        });
+
+
+
 
 
 
