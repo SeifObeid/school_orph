@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntriesTable extends Migration
+class CreateOutputsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,19 @@ class CreateEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('outputs', function (Blueprint $table) {
             $table->id();
-            $table->longText('note');
 
-            $table->string('invoice_number');
-            $table->date('date');
+            $table->longText("note");
+            $table->string("order_id");
+            $table->date("date");
 
-            $table->boolean('entry_insurance')->default(false);
-
-            $table->foreignId('supplier_id')->nullable()->constrained("suppliers");
             $table->foreignId('user_id')->constrained("users")->cascadeOnDelete();
             $table->foreignId('main_category_id')->constrained("main_categories")->cascadeOnDelete();
+            $table->foreignId('employee_id')->constrained("employees")->cascadeOnDelete();
 
             $table->timestamps();
-            $table->softDeletes();
-
         });
-
     }
 
     /**
@@ -40,6 +35,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('outputs');
     }
 }

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Classes\MainCategories;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     //
     //  public function create()
@@ -39,7 +41,7 @@ class ProductsController extends Controller
         if(request()->ajax()) {
             $currentURL = request()->segment(1);
 
-            return datatables()->of(Products::select('id','product_name','product_unit')->where('main_category_id', $this->main_categories[$currentURL]))
+            return datatables()->of(Product::select('id','product_name','product_unit')->where('main_category_id', MainCategories::$main_categories[$currentURL]))
             ->addColumn('action', 'core.add-product-action')
             ->rawColumns(['action'])
             ->addIndexColumn()
@@ -62,7 +64,7 @@ class ProductsController extends Controller
                         'product_unit' => $request->input('product_unit'),
                         'main_category_id'=> $this->main_categories[$currentURL]);
 
-        $product= Products::updateOrCreate(["id"=>$productId],$newData);
+        $product= Product::updateOrCreate(["id"=>$productId],$newData);
 
 
         return Response()->json($product);
@@ -75,7 +77,7 @@ class ProductsController extends Controller
     {
         error_log( $request->id);
         $where = array('id' => $request->id);
-        $product  = Products::where($where)->first();
+        $product  = Product::where($where)->first();
 
         return Response()->json($product);
     }
@@ -83,10 +85,38 @@ class ProductsController extends Controller
 
     public function destroy(Request $request)
     {
-        $company = Products::where('id',$request->id)->delete();
+        $company = Product::where('id',$request->id)->delete();
 
         return Response()->json($company);
     }
 
+
+      public function productsLog(){
+
+        // SELECT (pe.quantity - po.quantity) as quantity, pe.product_id,products.* FROM products JOIN (SELECT SUM(quantity) as quantity, product_id FROM `product_entries` GROUP BY product_id ) as pe ON pe.product_id=products.id JOIN (SELECT SUM(quantity) as quantity , product_id FROM `product_outputs` GROUP BY product_id) as po ON po.product_id=products.id
+                      $currentURL = request()->segment(1);
+
+
+        if(request()->ajax()) {
+            $currentURL = request()->segment(1);
+
+            return datatables()->of(DB::table("products")
+
+            ->join(DB::raw("(SELECT SUM(quantity) AS quantity, product_id FROM product_entries GROUP BY product_id ) AS pe"), DB::raw("pe.product_id") ,"=", DB::raw("products.id"))
+            ->join(DB::raw("(SELECT SUM(quantity) AS quantity , product_id FROM product_outputs GROUP BY product_id ) AS po"), DB::raw("po.product_id") ,"=", "products.id")
+           ->select(DB::raw( "(pe.quantity - po.quantity) as quantity, products.*"))
+            ->where("products.main_category_id" ,"=",MainCategories::$main_categories[$currentURL]) ->get())
+
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+
+
+
+
+
+        return view('core.products-log.index');
+      }
 
 }

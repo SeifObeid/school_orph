@@ -239,3 +239,39 @@ a.show #user-fa-custom  i  {
 }
 
 /* End entry insurance */
+.wrapper{
+    width: 100%;
+    background: rgb(220, 220, 220);
+     box-shadow:
+    rgba(10, 58, 84, 0.501) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12)0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+
+    border-radius: 20px;
+    aspect-ratio: 100 / 40;
+}
+.sub-main-title{
+    justify-content: center;
+    text-align: center;
+    color: rgb(0, 118, 10);
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+}
+.select-rtl{
+  direction: rtl;
+  background-position: left;
+
+}
+.save-entry-button{
+font-size: 25px;
+color: #1d4f71;
+ background-color: rgb(64, 194, 47);
+    border-radius: 20px;
+    border: 2px #24ae09 solid ;
+    padding: 5px 15px;
+    color: rgb(40, 60, 48);
+    font-weight: bold;
+padding:5px 30px;}

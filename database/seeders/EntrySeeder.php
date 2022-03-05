@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Entries;
+use App\Models\Entry;
 use Illuminate\Database\Seeder;
 
-class EntriesSeeder extends Seeder
+class EntrySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,7 +29,7 @@ class EntriesSeeder extends Seeder
                 'note' => 'we are in ',
                 'invoice_number' => '5002',
                 'date' => '2020-10-10',
-                'entry_insurance' => '1',
+                'entry_insurance' => '0',
                 'supplier_id' => '2',
                 'user_id' => '3',
                 'main_category_id' => '8',
@@ -47,7 +47,7 @@ class EntriesSeeder extends Seeder
         ];
 
          foreach ($entries as $key => $value) {
-            Entries::create($value);
+            Entry::create($value);
         }
     }
 }

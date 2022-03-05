@@ -11,7 +11,7 @@
                     <h2>Laravel 8 Ajax CRUD DataTables Tutorial</h2>
                 </div> --}}
                 <div class="pull-right mb-2">
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"> أضف نوع جديد</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"> أضف منتج جديد</a>
                 </div>
             </div>
         </div>
@@ -24,9 +24,9 @@
             <table class="table table-bordered" id="product-datatable" dir="rtl">
                 <thead>
                     <tr>
-                        <th>رقم النوع</th>
-                        <th>اسم النوع</th>
-                        <th>وحدة النوع</th>
+                        <th>رقم المنتج</th>
+                        <th>اسم المنتج</th>
+                        <th>وحدة المنتج</th>
                         <th>العمليات</th>
                     </tr>
                 </thead>

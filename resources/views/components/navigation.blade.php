@@ -20,7 +20,7 @@
                         </span>
                         <span style="padding-left: 10px">
 
-                            أضافة فرع جديد
+                            أضافة منتج جديد
 
 
                         </span>

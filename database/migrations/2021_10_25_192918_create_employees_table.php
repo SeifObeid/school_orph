@@ -18,7 +18,8 @@ class CreateEmployeesTable extends Migration
 
             $table->string('name');
             $table->string('phone_number');
-            $table->string('photo');
+            $table->string('photo')->nullable();
+            //$table->foreignId('main_category_id')->constrained("main_categories")->cascadeOnDelete();
 
             $table->timestamps();
         });

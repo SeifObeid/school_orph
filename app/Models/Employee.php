@@ -9,4 +9,12 @@ class Employee extends Model
 {
     use HasFactory;
     protected $guarded = [];
+      public function custodies()
+    {
+        return $this->hasMany(Custody::class);
+    }
+    public function outputs()
+    {
+        return $this->hasMany(Output::class);
+    }
 }

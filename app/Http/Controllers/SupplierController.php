@@ -11,6 +11,8 @@ class SupplierController extends Controller
      public function index()
     {
 
+
+
         if(request()->ajax()) {
 
             return datatables()->of(Supplier::select('id','name','phone_number'))
@@ -51,8 +53,14 @@ class SupplierController extends Controller
 
     public function destroy(Request $request)
     {
-        $supplier = Supplier::where('id',$request->id)->delete();
 
+
+                //$supplier = Supplier::where('id',$request->id)->delete();
+                $supplier = Supplier::find($request->id)->delete(); // if we want softCascadeDelete
+
+
+
+        error_log("wow");
         return Response()->json($supplier);
     }
 

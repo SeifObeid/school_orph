@@ -177,6 +177,9 @@ return [
 
 
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+
 
     ],
 
