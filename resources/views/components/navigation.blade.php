@@ -54,7 +54,7 @@
 
             <hr>
             <li class="mb-2">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
+                <a class="dropdown-item border-radius-md" href="{{route('logout') }}">
 
                     <p class="text-xs text-secondary mb-0 py-1">
                         <span style=" color: rgb(172, 46, 0);">

@@ -16,7 +16,7 @@ class CreateOutputsTable extends Migration
         Schema::create('outputs', function (Blueprint $table) {
             $table->id();
 
-            $table->longText("note");
+            $table->longText("note")->nullable();
             $table->string("order_id");
             $table->date("date");
 

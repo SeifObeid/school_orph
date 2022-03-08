@@ -15,7 +15,7 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
-            $table->longText('note');
+            $table->longText('note')->nullable();
 
             $table->string('invoice_number');
             $table->date('date');

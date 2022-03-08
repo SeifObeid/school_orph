@@ -18,23 +18,23 @@ class ProductController extends Controller
 
     //     return view('core.add-product');
     // }
-    private $main_categories=array(
-        "carpentry"=>1,
-        "upholstery-and-decoration"=>2,
-        "typography"=>3,
-        "metal-forming"=>4,
-        "mechatronics"=>5,
-        "conditioning-and-cooling"=>6,
-        "electricity"=>7,
-        "public-administration"=>8,
-        "elementary-school"=>9,
-        "secondary-school"=>10,
-        "kindergarten"=>11,
-        "kitchen"=>12,
-        "dorm"=>13,
+    // private $main_categories=array(
+    //     "carpentry"=>1,
+    //     "upholstery-and-decoration"=>2,
+    //     "typography"=>3,
+    //     "metal-forming"=>4,
+    //     "mechatronics"=>5,
+    //     "conditioning-and-cooling"=>6,
+    //     "electricity"=>7,
+    //     "public-administration"=>8,
+    //     "elementary-school"=>9,
+    //     "secondary-school"=>10,
+    //     "kindergarten"=>11,
+    //     "kitchen"=>12,
+    //     "dorm"=>13,
 
 
-    );
+    // );
      public function index()
     {
 
@@ -62,7 +62,7 @@ class ProductController extends Controller
 
         $newData =array('product_name' => $request->input('product_name'),
                         'product_unit' => $request->input('product_unit'),
-                        'main_category_id'=> $this->main_categories[$currentURL]);
+                        'main_category_id'=> MainCategories::$main_categories[$currentURL]);
 
         $product= Product::updateOrCreate(["id"=>$productId],$newData);
 
@@ -97,14 +97,16 @@ class ProductController extends Controller
                       $currentURL = request()->segment(1);
 
 
+
+
         if(request()->ajax()) {
             $currentURL = request()->segment(1);
 
             return datatables()->of(DB::table("products")
 
-            ->join(DB::raw("(SELECT SUM(quantity) AS quantity, product_id FROM product_entries GROUP BY product_id ) AS pe"), DB::raw("pe.product_id") ,"=", DB::raw("products.id"))
-            ->join(DB::raw("(SELECT SUM(quantity) AS quantity , product_id FROM product_outputs GROUP BY product_id ) AS po"), DB::raw("po.product_id") ,"=", "products.id")
-           ->select(DB::raw( "(pe.quantity - po.quantity) as quantity, products.*"))
+            ->join(DB::raw("(SELECT SUM(quantity) AS quantity, product_id FROM entries JOIN product_entries on entries.id =  product_entries.entry_id where entries.entry_insurance =1  GROUP BY product_id) AS pe"), DB::raw("pe.product_id") ,"=", DB::raw("products.id"))
+            ->leftJoin(DB::raw("(SELECT SUM(quantity) AS quantity , product_id FROM product_outputs GROUP BY product_id ) AS po"), DB::raw("po.product_id") ,"=", "products.id")
+           ->select(DB::raw( "(pe.quantity -  IFNULL(po.quantity, 0 )) as quantity, products.*"))
             ->where("products.main_category_id" ,"=",MainCategories::$main_categories[$currentURL]) ->get())
 
             ->addIndexColumn()
@@ -118,5 +120,26 @@ class ProductController extends Controller
 
         return view('core.products-log.index');
       }
+       public function productBalance(Request $request){
+          if(request()->ajax()) {
+            $productId =$request->id;
+
+            if (Product::find( $productId ) ==null){
+                return -9999;
+            };
+
+             $productBalance =  DB::table("products")
+
+            ->join(DB::raw("(SELECT SUM(quantity) AS quantity, product_id FROM entries JOIN product_entries on entries.id =  product_entries.entry_id where entries.entry_insurance =1 and product_entries.product_id =".$productId." GROUP BY product_id) AS pe"), DB::raw("pe.product_id") ,"=", DB::raw("products.id"))
+            ->leftJoin(DB::raw("(SELECT SUM(quantity) AS quantity , product_id FROM product_outputs where product_id =".$productId." GROUP BY product_id ) AS po"), DB::raw("po.product_id") ,"=", "products.id")
+           ->select(DB::raw( "(pe.quantity -  IFNULL(po.quantity, 0 )) as quantity"))
+            ->where("products.id" ,"=", $productId) ->get();
+            if(  sizeof($productBalance) == 0 )
+                return  (object)  ['quantity'=> '0' ];
+            return $productBalance[0];
+
+
+        }
+       }
 
 }

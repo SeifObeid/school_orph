@@ -32,11 +32,17 @@ class ProductEntrySeeder extends Seeder
                 'product_id' => '1',
                 'entry_id' => '2',
             ],
+             [
+                'quantity' => 10,
+                'price' => 77.7,
+                'product_id' => '3',
+                'entry_id' => '1',
+            ],
             [
-                'quantity' => 1,
+                'quantity' => 33,
                 'price' => 1500,
                 'product_id' => '4',
-                'entry_id' => '2',
+                'entry_id' => '1',
             ],
 
         ];

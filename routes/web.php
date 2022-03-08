@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-
+Route::post('/productBalance',  [ProductController::class, 'productBalance'])->middleware(['auth'])->name("productBalance");
 
 Route::prefix('suppliers')->middleware(['auth'])->group(function () {
 
@@ -238,6 +238,14 @@ Route::prefix('public-administration')->middleware(['auth'])->group(function () 
            Route::delete('', [EntryController::class, 'destroy'])->name("public-administration.entry.destroy");
 
         });
+         Route::prefix("output")->group(function(){
+           Route::get('', [OutputController::class, 'create'])->name("public-administration.output.create");
+           Route::post('', [OutputController::class, 'store'])->name("public-administration.output.store");
+           Route::get('{id}', [OutputController::class, 'show'])->name("public-administration.output.show");
+           Route::delete('', [OutputController::class, 'destroy'])->name("public-administration.output.destroy");
+
+        });
+
 
 
 

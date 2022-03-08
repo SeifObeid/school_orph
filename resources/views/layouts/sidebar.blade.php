@@ -41,7 +41,7 @@
 
         <hr style="color: rgb(199, 199, 199); margin-top:50px">
 
-        <li><a href='#message'>تسجيل خروج</a></li>
+        <li><a href="{{route('logout') }}">تسجيل خروج</a></li>
     </ul>
 </nav>
 <script>

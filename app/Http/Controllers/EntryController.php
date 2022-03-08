@@ -65,7 +65,7 @@ class EntryController extends Controller
     'supplier_id' => Request::all()["supplier"],
     'note' => Request::all()["note"],
     'user_id' => auth()->id(),
-    'main_category_id'=>$this->main_categories[Request::segment(1)],
+    'main_category_id'=> MainCategories::$main_categories[Request::segment(1)],
         ]);
 
         //["products"][i][inputProductValue] ===>product id

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-right mb-2">
-                    <a class="btn btn-success" href="entry"> أضف مُخرج جديد</a>
+                    <a class="btn btn-success" href="output"> أضف مُخرج جديد</a>
                 </div>
             </div>
         </div>
