@@ -1,7 +1,7 @@
-{{-- <a data-toggle="tooltip" href="{{ route(Request::segment(1).'.entry.show',['id'=>$id]) }}"
-    data-original-title="Edit" class="edit btn btn-success edit">
+<a data-toggle="tooltip" href="{{ route(Request::segment(1).'.output.show',['id'=>$id]) }}" data-original-title="Edit"
+    class="edit btn btn-success edit">
     تفاصيل
-</a> --}}
+</a>
 <a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit"
     class="edit btn btn-warning edit">
     تعديل

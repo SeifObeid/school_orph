@@ -14,7 +14,7 @@
 
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="invoiceNumber">رقم الفاتورة</span>
+                    <span class="input-group-text" id="order_id">رقم الطلب</span>
                     <div class="d-flex align-items-center p-2">
                         {{ $output->order_id }}
 
@@ -27,7 +27,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text">التاريخ</span>
                     <div class="d-flex align-items-center p-2">
-                        {{ $entry->date }}
+                        {{ $output->date }}
 
                     </div>
 
@@ -35,9 +35,9 @@
             </div>
             <div class="col-lg-3 col-md-6 mt-4">
                 <div class="input-group mb-3">
-                    <span class="input-group-text">المورد</span>
+                    <span class="input-group-text">الموظف</span>
                     <div class="d-flex align-items-center p-2">
-                        {{ $entry->supplier_id }}
+                        {{ $output->employee->name }}
 
                     </div>
 
@@ -47,7 +47,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="note">ملاحظات</span>
                     <div class="d-flex align-items-center p-2">
-                        {{ $entry->note }}
+                        {{ $output->note }}
 
                     </div>
 
@@ -56,7 +56,7 @@
 
 
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-3 col-md-6 mt-4">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="note">الضبط</span>
@@ -80,7 +80,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col">
 
@@ -94,7 +94,8 @@
                                 <th scope="col">###</th>
                                 <th scope="col">المنتج</th>
                                 <th scope="col">العدد</th>
-                                <th scope="col">العهدة</th>
+                                <th scope="col">عهدة/مستهلك</th>
+                                <th scope="col">هوية القطعة</th>
                             </tr>
                         </thead>
                         <hr>
@@ -108,7 +109,8 @@
                                 <td>{{ $product->product->id }}</td>
                                 <td>{{ $product->product->product_name }}</td>
                                 <td>{{ $product->quantity }}</td>
-                                <td>{{ $product->custody_id }}</td>
+                                <td>{{ isset($product->custody_id)==true ?"عهدة":"مستهلك" }}</td>
+                                <td>{{ isset($product->custody_id)==true ?$product->custody_id: "---" }}</td>
                             </tr>
 
 

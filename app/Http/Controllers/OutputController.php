@@ -100,7 +100,6 @@ class OutputController extends Controller
 
                     ]);
 
-                    // $productOutput["id"]
 
                 }
                 else{
@@ -128,10 +127,10 @@ class OutputController extends Controller
     {
 
 
-        $output = Output::with("supplier","productsEntries.product")->find($id);
+        $output = Output::with("employee","productOutputs.product")->find($id);
 
          $products = $output->productOutputs;
-       // dd($products);
+    //    dd($products);
         return view('core.outputs.output-show',['output' => $output, 'products' => $products]);
 
     }
