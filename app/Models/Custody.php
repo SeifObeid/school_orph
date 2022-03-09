@@ -10,7 +10,7 @@ class Custody extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function output()
+    public function productOutput()
     {
         return $this->belongsTo(ProductOutput::class, 'product_output_id');
     }

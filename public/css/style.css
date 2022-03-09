@@ -208,12 +208,12 @@ a.show #user-fa-custom  i  {
 
 
 /*  entry insurance */
-#entry_insurance{
+#entry_insurance,#destroyed{
 
     display: flex;
     justify-content: center;
 }
-#entry_insurance .green_insurance{
+#entry_insurance .green_insurance ,#destroyed .green_insurance{
     font-family: 'Cairo', sans-serif;
     font-family: 'El Messiri', sans-serif;
     display: inline;
@@ -225,7 +225,7 @@ a.show #user-fa-custom  i  {
     font-weight: bold;
 
 }
-#entry_insurance .red_insurance{
+#entry_insurance .red_insurance ,#destroyed .red_insurance{
     font-family: 'Cairo', sans-serif;
     font-family: 'El Messiri', sans-serif;
     display: inline;

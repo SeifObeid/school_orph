@@ -72,7 +72,7 @@
                     {{-- last(request()->segments()) --}}
                     {{ __('pagination.'.Request::segment(1) ) ;}}
                 </div>
-                @if (Request::segment(1) !== "suppliers")
+                @if (Request::segment(1) !== "suppliers" && Request::segment(1) !== "employees")
                 <x-inner-navigation />
                 @endif
 

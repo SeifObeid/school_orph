@@ -32,6 +32,7 @@ return [
     'kitchen'=>'المطبخ',
     'dorm'=>'السكن الداخلي',
     'suppliers'=>'الموردين',
+    'employees'=>'الموظفين',
 
 
 

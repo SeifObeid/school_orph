@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustodyController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\OutputController;
@@ -39,9 +40,20 @@ Route::prefix('suppliers')->middleware(['auth'])->group(function () {
         Route::get('', [SupplierController::class, 'index'])->name("suppliers.index");
 
         // Route::get('add-product', [ProductController::class, 'index'])->name("carpentry.product.index");
-        Route::post('store-product', [SupplierController::class, 'store'])->name("suppliers.store");
-        Route::post('edit-product', [SupplierController::class, 'edit'])->name("suppliers.edit");
-        Route::post('delete-product', [SupplierController::class, 'destroy'])->name("suppliers.destroy");
+        Route::post('store-supplier', [SupplierController::class, 'store'])->name("suppliers.store");
+        Route::post('edit-supplier', [SupplierController::class, 'edit'])->name("suppliers.edit");
+        Route::post('delete-supplier', [SupplierController::class, 'destroy'])->name("suppliers.destroy");
+
+
+
+});
+Route::prefix('employees')->middleware(['auth'])->group(function () {
+
+
+        Route::get('', [EmployeeController::class, 'index'])->name("employees.index");
+        Route::post('store-employee', [EmployeeController::class, 'store'])->name("employees.store");
+        Route::post('edit-employee', [EmployeeController::class, 'edit'])->name("employees.edit");
+        Route::post('delete-employee', [EmployeeController::class, 'destroy'])->name("employees.destroy");
 
 
 
@@ -227,9 +239,19 @@ Route::prefix('public-administration')->middleware(['auth'])->group(function () 
         Route::post('delete-product', [ProductController::class, 'destroy'])->name("public-administration.product.destroy");
 
         Route::get('entries', [EntryController::class, 'index'])->name("public-administration.entries.index");
-        Route::get('products-log', [ProductController::class, 'productsLog'])->name("public-administration.products-log.index");
+
+        Route::prefix("products-log")->group(function(){
+           Route::get('', [ProductController::class, 'productsLog'])->name("public-administration.products-log.index");
+
+        });
+        // Route::get('products-log', [ProductController::class, 'productsLog'])->name("public-administration.products-log.index");
         Route::get('outputs', [OutputController::class, 'index'])->name("public-administration.outputs.index");
-        Route::get('custodies', [CustodyController::class, 'index'])->name("public-administration.custodies.index");
+        // Route::get('custodies', [CustodyController::class, 'index'])->name("public-administration.custodies.index");
+         Route::prefix("custodies")->group(function(){
+           Route::get('', [CustodyController::class, 'index'])->name("public-administration.custodies.index");
+           Route::get('{id}', [CustodyController::class, 'show'])->name("public-administration.custodies.show");
+
+        });
 
         Route::prefix("entry")->group(function(){
            Route::get('', [EntryController::class, 'create'])->name("public-administration.entry.create");

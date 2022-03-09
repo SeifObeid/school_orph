@@ -87,6 +87,16 @@ class CustodyController extends Controller
     public function show($id)
     {
         //
+        $productOutput = ProductOutput::with("output","product","custodies.employee")->where("custody_id","=",$id)->first();
+        $output=$productOutput->output;
+        $product=$productOutput->product;
+        $custodies=$productOutput->custodies;
+
+        // dd($productOutput);
+
+        return view('core.custodies.custody-show',[ 'productOutput' => $productOutput,'output' => $output, 'custodies' => $custodies, 'product' => $product]);
+
+
     }
 
     /**
