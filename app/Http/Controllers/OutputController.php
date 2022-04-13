@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Entry;
 use App\Models\Output;
 use Illuminate\Support\Facades\Request;
 use App\Classes\MainCategories;
@@ -10,6 +9,7 @@ use App\Models\Custody;
 use App\Models\Employee;
 use App\Models\Product;
 use App\Models\ProductOutput;
+use App\Models\SubCategory;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -49,12 +49,15 @@ class OutputController extends Controller
 
      public function create()
     {
+        $currentURL = request()->segment(1);
+
           $employees = Employee::all();
           $products = Product::all(); //need to specific the main type
+          $subCategories = SubCategory::where('main_category_id', MainCategories::$main_categories[$currentURL])->get();
         // dd($suppliers,$products );
 
 
-         return view('core.outputs.output',['employees' => $employees, 'products' => $products]);
+         return view('core.outputs.output',['employees' => $employees, 'products' => $products,'subCategories'=>$subCategories]);
     }
 
 
@@ -66,13 +69,13 @@ class OutputController extends Controller
     {
 
 
-// products
             $input = request()->all();
-
+            error_log($input["subCategory"]);
                     $newOutput= Output::create([
                                 'order_id' => $input["order_id"],
                                 'date' => $input["output_date"],
                                 'employee_id' => $input["employee"],
+                                'sub_category_id' => $input["subCategory"],
                                 'note' => $input["note"],
                                 'user_id' => auth()->id(),
                                 'main_category_id'=> MainCategories::$main_categories[Request::segment(1)],
@@ -127,7 +130,7 @@ class OutputController extends Controller
     {
 
 
-        $output = Output::with("employee","productOutputs.product")->find($id);
+        $output = Output::with("employee","productOutputs.product","subCategory")->find($id);
 
          $products = $output->productOutputs;
     //    dd($products);
@@ -142,11 +145,45 @@ class OutputController extends Controller
 
 
                 //$supplier = Supplier::where('id',$r equest->id)->delete();
-        $entry = Entry::find(Request::all()["entryId"])->delete(); // if we want softCascadeDelete
+        $output = Output::find(Request::all()["outputId"])->delete(); // if we want softCascadeDelete
 
 
 
 
-        return Response()->json($entry);
+        return Response()->json($output);
+    }
+
+     public function edit( $id)
+    {
+
+        $output = Output::with("employee","productOutputs.product","subCategory")->find($id);
+        $currentURL = request()->segment(1);
+
+        $products = Product::where('main_category_id', MainCategories::$main_categories[$currentURL])->get();
+        $employees = Employee::all();
+        $subCategories = SubCategory::where('main_category_id', MainCategories::$main_categories[$currentURL])->get();
+
+        $productOutputs = $output->productOutputs;
+
+    //    dd($productOutputs);
+        return view('core.outputs.output-edit',['output' => $output, 'productOutputs' => $productOutputs, 'products' => $products,'employees' => $employees ,'subCategories'=>$subCategories]);
+
+    }
+
+     public function update(Request $request)
+    {
+        //
+            // dd($request::all());
+
+        $output = array(
+
+        "order_id"=>$request::input("order_id"),
+        "date"=>$request::input("output_date"),
+        "employee_id"=>$request::input("employee"),
+        "sub_category_id"=>$request::input("subCategory"),
+        "note"=>$request::input("note")
+    );
+         Output::find($request::input("outputId"))->update($output);
+        return Redirect::route(request()->segment(1).".outputs.index");;
     }
 }

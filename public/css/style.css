@@ -245,7 +245,7 @@ a.show #user-fa-custom  i  {
      box-shadow:
     rgba(10, 58, 84, 0.501) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px,
-    rgba(0, 0, 0, 0.12)0px 4px 6px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px,
     rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
@@ -257,6 +257,13 @@ a.show #user-fa-custom  i  {
     justify-content: center;
     text-align: center;
     color: rgb(0, 118, 10);
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+}
+.sub-main-title-edit{
+    justify-content: center;
+    text-align: center;
+    color: rgb(201, 161, 2);
     font-family: 'Cairo', sans-serif;
     font-size: 22px;
 }

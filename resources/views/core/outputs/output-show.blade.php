@@ -45,6 +45,16 @@
             </div>
             <div class="col-lg-3 col-md-6 mt-4">
                 <div class="input-group mb-3">
+                    <span class="input-group-text">الفرع</span>
+                    <div class="d-flex align-items-center p-2">
+                        {{ $output->subCategory->name }}
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mt-4">
+                <div class="input-group mb-3">
                     <span class="input-group-text" id="note">ملاحظات</span>
                     <div class="d-flex align-items-center p-2">
                         {{ $output->note }}

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\OutputController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Redirect;
 
@@ -84,6 +85,19 @@ Route::prefix('carpentry')->middleware(['auth'])->group(function () {
         });
 
 
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("carpentry.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("carpentry.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("carpentry.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("carpentry.sub-category.destroy");
+
+
+
+        });
+
+
 });
 
 Route::prefix('upholstery-and-decoration')->middleware(['auth'])->group(function () {
@@ -105,6 +119,19 @@ Route::prefix('upholstery-and-decoration')->middleware(['auth'])->group(function
            Route::post('', [EntryController::class, 'store'])->name("upholstery-and-decoration.entry.store");
            Route::get('{id}', [EntryController::class, 'show'])->name("upholstery-and-decoration.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("upholstery-and-decoration.entry.destroy");
+
+        });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("upholstery-and-decoration.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("upholstery-and-decoration.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("upholstery-and-decoration.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("upholstery-and-decoration.sub-category.destroy");
+
+
 
         });
 });
@@ -130,6 +157,19 @@ Route::prefix('typography')->middleware(['auth'])->group(function () {
            Route::delete('', [EntryController::class, 'destroy'])->name("typography.entry.destroy");
 
         });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("typography.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("typography.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("typography.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("typography.sub-category.destroy");
+
+
+
+        });
 });
 
 Route::prefix('metal-forming')->middleware(['auth'])->group(function () {
@@ -151,6 +191,19 @@ Route::prefix('metal-forming')->middleware(['auth'])->group(function () {
            Route::post('', [EntryController::class, 'store'])->name("metal-forming.entry.store");
            Route::get('{id}', [EntryController::class, 'show'])->name("metal-forming.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("metal-forming.entry.destroy");
+
+        });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("metal-forming.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("metal-forming.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("metal-forming.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("metal-forming.sub-category.destroy");
+
+
 
         });
 });
@@ -176,6 +229,21 @@ Route::prefix('mechatronics')->middleware(['auth'])->group(function () {
            Route::delete('', [EntryController::class, 'destroy'])->name("mechatronics.entry.destroy");
 
         });
+
+
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("mechatronics.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("mechatronics.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("mechatronics.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("mechatronics.sub-category.destroy");
+
+
+
+        });
 });
 
 Route::prefix('conditioning-and-cooling')->middleware(['auth'])->group(function () {
@@ -197,6 +265,18 @@ Route::prefix('conditioning-and-cooling')->middleware(['auth'])->group(function 
            Route::post('', [EntryController::class, 'store'])->name("conditioning-and-cooling.entry.store");
            Route::get('{id}', [EntryController::class, 'show'])->name("conditioning-and-cooling.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("conditioning-and-cooling.entry.destroy");
+
+        });
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("conditioning-and-cooling.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("conditioning-and-cooling.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("conditioning-and-cooling.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("conditioning-and-cooling.sub-category.destroy");
+
+
 
         });
 });
@@ -223,6 +303,22 @@ Route::prefix('electricity')->middleware(['auth'])->group(function () {
 
         });
 
+
+
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("electricity.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("electricity.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("electricity.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("electricity.sub-category.destroy");
+
+
+
+        });
+
 });
 
 
@@ -244,12 +340,12 @@ Route::prefix('public-administration')->middleware(['auth'])->group(function () 
            Route::get('', [ProductController::class, 'productsLog'])->name("public-administration.products-log.index");
 
         });
-        // Route::get('products-log', [ProductController::class, 'productsLog'])->name("public-administration.products-log.index");
-        Route::get('outputs', [OutputController::class, 'index'])->name("public-administration.outputs.index");
-        // Route::get('custodies', [CustodyController::class, 'index'])->name("public-administration.custodies.index");
+
          Route::prefix("custodies")->group(function(){
            Route::get('', [CustodyController::class, 'index'])->name("public-administration.custodies.index");
            Route::get('{id}', [CustodyController::class, 'show'])->name("public-administration.custodies.show");
+           Route::put('', [CustodyController::class, 'updateDestroyed'])->name("public-administration.custodies.updateDestroyed");
+           Route::post('changeCustody', [CustodyController::class, 'changeCustody'])->name("public-administration.custodies.changeCustody");
 
         });
 
@@ -259,19 +355,37 @@ Route::prefix('public-administration')->middleware(['auth'])->group(function () 
            Route::get('{id}', [EntryController::class, 'show'])->name("public-administration.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("public-administration.entry.destroy");
 
+           Route::get('{id}/edit', [EntryController::class, 'edit'])->name("public-administration.entry.edit");
+           Route::put('', [EntryController::class, 'update'])->name("public-administration.entry.update");
+
         });
-         Route::prefix("output")->group(function(){
+
+        Route::get('outputs', [OutputController::class, 'index'])->name("public-administration.outputs.index");
+        Route::prefix("output")->group(function(){
            Route::get('', [OutputController::class, 'create'])->name("public-administration.output.create");
            Route::post('', [OutputController::class, 'store'])->name("public-administration.output.store");
            Route::get('{id}', [OutputController::class, 'show'])->name("public-administration.output.show");
            Route::delete('', [OutputController::class, 'destroy'])->name("public-administration.output.destroy");
 
+           Route::get('{id}/edit', [OutputController::class, 'edit'])->name("public-administration.output.edit");
+           Route::put('', [OutputController::class, 'update'])->name("public-administration.output.update");
+
         });
 
 
 
 
+        Route::prefix('sub-category')->group(function () {
 
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("public-administration.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("public-administration.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("public-administration.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("public-administration.sub-category.destroy");
+
+
+
+        });
 
 
 
@@ -300,6 +414,19 @@ Route::prefix('elementary-school')->middleware(['auth'])->group(function () {
 
         });
 
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("elementary-school.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("elementary-school.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("elementary-school.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("elementary-school.sub-category.destroy");
+
+
+
+        });
+
 });
 Route::prefix('secondary-school')->middleware(['auth'])->group(function () {
         Route::get('', function(){
@@ -320,6 +447,19 @@ Route::prefix('secondary-school')->middleware(['auth'])->group(function () {
            Route::post('', [EntryController::class, 'store'])->name("secondary-school.entry.store");
            Route::get('{id}', [EntryController::class, 'show'])->name("secondary-school.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("secondary-school.entry.destroy");
+
+        });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("secondary-school.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("secondary-school.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("secondary-school.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("secondary-school.sub-category.destroy");
+
+
 
         });
 });
@@ -345,6 +485,19 @@ Route::prefix('kindergarten')->middleware(['auth'])->group(function () {
            Route::delete('', [EntryController::class, 'destroy'])->name("kindergarten.entry.destroy");
 
         });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("kindergarten.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("kindergarten.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("kindergarten.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("kindergarten.sub-category.destroy");
+
+
+
+        });
 });
 Route::prefix('kitchen')->middleware(['auth'])->group(function () {
         Route::get('', function(){
@@ -368,6 +521,19 @@ Route::prefix('kitchen')->middleware(['auth'])->group(function () {
            Route::delete('', [EntryController::class, 'destroy'])->name("kitchen.entry.destroy");
 
         });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("kitchen.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("kitchen.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("kitchen.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("kitchen.sub-category.destroy");
+
+
+
+        });
 });
 Route::prefix('dorm')->middleware(['auth'])->group(function () {
         Route::get('', function(){
@@ -388,6 +554,19 @@ Route::prefix('dorm')->middleware(['auth'])->group(function () {
            Route::post('', [EntryController::class, 'store'])->name("dorm.entry.store");
            Route::get('{id}', [EntryController::class, 'show'])->name("dorm.entry.show");
            Route::delete('', [EntryController::class, 'destroy'])->name("dorm.entry.destroy");
+
+        });
+
+
+        Route::prefix('sub-category')->group(function () {
+
+
+            Route::get('', [SubCategoryController::class, 'index'])->name("dorm.sub-category.index");
+            Route::post('store-sub-category', [SubCategoryController::class, 'store'])->name("dorm.sub-category.store");
+            Route::post('edit-sub-category', [SubCategoryController::class, 'edit'])->name("dorm.sub-category.edit");
+            Route::post('delete-sub-category', [SubCategoryController::class, 'destroy'])->name("dorm.sub-category.destroy");
+
+
 
         });
 });

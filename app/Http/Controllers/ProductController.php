@@ -12,29 +12,7 @@ use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
-    //
-    //  public function create()
-    // {
 
-    //     return view('core.add-product');
-    // }
-    // private $main_categories=array(
-    //     "carpentry"=>1,
-    //     "upholstery-and-decoration"=>2,
-    //     "typography"=>3,
-    //     "metal-forming"=>4,
-    //     "mechatronics"=>5,
-    //     "conditioning-and-cooling"=>6,
-    //     "electricity"=>7,
-    //     "public-administration"=>8,
-    //     "elementary-school"=>9,
-    //     "secondary-school"=>10,
-    //     "kindergarten"=>11,
-    //     "kitchen"=>12,
-    //     "dorm"=>13,
-
-
-    // );
      public function index()
     {
 
@@ -85,9 +63,9 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-        $company = Product::where('id',$request->id)->delete();
+        $product = Product::where('id',$request->id)->delete();
 
-        return Response()->json($company);
+        return Response()->json($product);
     }
 
 

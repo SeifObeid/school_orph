@@ -31,6 +31,27 @@
 
                 </a>
             </li>
+            <li class="mb-2">
+                <a class="dropdown-item border-radius-md"
+                    href='{{ Route::has(Request::segment(1).".sub-category.index") ?route( Request::segment(1).".sub-category.index"):route("public-administration.sub-category.index") }}'>
+
+
+                    <p class="text-xs text-secondary mb-0 py-1">
+                        <span style=" color: rgb(0, 172, 43);">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                        <span style="padding-left: 10px">
+
+                            أضافة فرع جديد
+
+
+                        </span>
+
+
+                    </p>
+
+                </a>
+            </li>
             @endif
 
             <li class="mb-2">

@@ -12,9 +12,13 @@ class Product extends Model
 
 
    protected $guarded = [];
-    public function productsEntries()
+    public function productEntries()
     {
         return $this->hasMany(ProductEntry::class,'product_id');
+    }
+    public function productOutputs()
+    {
+        return $this->hasMany(ProductOutput::class,'product_id');
     }
 
 }

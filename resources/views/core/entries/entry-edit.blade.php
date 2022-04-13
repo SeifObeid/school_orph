@@ -6,12 +6,12 @@
 
 
 <div class="wrapper">
-    <div class="container sub-main-title">
-        مدخل جديد
-    </div>
+    <div class="container sub-main-title-edit"> تعديل على مدخل </div>
     <div class="container " style="direction: rtl">
-        <form method="POST" action="./entry" id="entryForm">
+        <form method="post" action="{{ route(Request::segment(1).'.entry.update') }}" id="entryForm">
             @csrf
+            @method('put')
+            <input type='hidden' name="entryId" value="{{ $entry->id }}">
             <div class="row d-flex flex-wrap justify-content-around">
                 <div class="col-lg-3 col-md-6">
 
@@ -19,7 +19,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="invoiceNumber">رقم الفاتورة</span>
                         <input type="text" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="invoiceNumber" name="invoiceNumber">
+                            aria-describedby="invoiceNumber" name="invoiceNumber" value="{{ $entry->invoice_number }}">
                     </div>
 
                 </div>
@@ -27,17 +27,19 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">التاريخ</span>
                         <input type="date" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="entryDate" id="entryDate" name="entryDate">
+                            aria-describedby="entryDate" id="entryDate" name="entryDate" value="{{ $entry->date }}">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="input-group mb-3">
                         <span class="input-group-text">المورد</span>
 
-                        <input class=" form-control" list="selectSupplier" id="supplier" placeholder="اختر المورد">
+                        <input class=" form-control" list="selectSupplier" id="supplier" placeholder="اختر المورد"
+                            value="{{  $entry->supplier->name}}">
                         @if($suppliers->count()>0)
                         <datalist id="selectSupplier">
                             @foreach ($suppliers as $supplier)
+
                             <option data-customvalue={{ $supplier->id }} value="{{ $supplier->name }}">
                                 @endforeach
                         </datalist>
@@ -51,7 +53,7 @@
                         {{-- <input type="text" class="form-control" aria-label="Sizing example input"
                             aria-describedby="note"> --}}
                         <textarea class="form-control" placeholder="اكتب الملاحظات هنا" name="note" id="note"
-                            style="height: -20px"></textarea>
+                            style="height: -20px">{{ $entry->note }}</textarea>
                     </div>
                 </div>
 
@@ -81,9 +83,10 @@
 
                                     @if($products->count()>0)
                                     <datalist id="selectProduct">
-                                        @foreach ($products as $post)
+                                        @foreach ($products as $product)
 
-                                        <option data-customvalue={{ $post->id }} value="{{ $post->product_name }}">
+                                        <option data-customvalue={{ $product->id }} value="{{ $product->product_name
+                                            }}">
 
                                             @endforeach
                                     </datalist>
@@ -127,7 +130,42 @@
                                 </tr>
                             </thead>
                             <hr>
-                            <tbody id="tests-table" name="productTable"></tbody>
+                            <tbody id="products-table" name="productTable">
+                                @if($productEntries->count()>0)
+                                @foreach ($productEntries as $index => $productEntry)
+                                <tr scope="row" class="test-row-{{ $index }}" name=products[{{ $index }}][]>
+                                    <input type='hidden' name=products[{{ $index }}][productEntriesId]
+                                        value="{{ $productEntry->id }}">
+
+                                    <input type='hidden' name=products[{{ $index }}][inputProductValue]
+                                        value="{{ $productEntry->product->id }}">
+
+                                    <input type='hidden' name=products[{{ $index }}][quantity]
+                                        value="{{ $productEntry->quantity }}">
+                                    <input type='hidden' name=products[{{ $index }}][unitPrice]
+                                        value="{{ $productEntry->price }}">
+
+                                    <td>{{ $index }}</td>
+                                    <td>{{ $productEntry->product->product_name }}</td>
+
+                                    <td>{{ $productEntry->quantity }}</td>
+                                    <td>{{ $productEntry->price }}</td>
+
+                                    <td>
+                                        <button class=" btn btn-sm btn-danger" type="button"
+                                            onclick="deleteRow({{ $index }})" data-testid={{ $index }}
+                                            id="delete-{{ $index }}">حذف</button>
+
+
+                                    </td>
+                                </tr>
+
+                                @endforeach
+                                @endif
+
+
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -135,7 +173,7 @@
 
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
-                    <button id="saveEntryButton" class="save-entry-button">حفظ</button>
+                    <button id="saveEntryButton" class="save-entry-button">حفظ التعديل</button>
                 </div>
             </div>
         </form>
@@ -190,11 +228,9 @@
             "quantity":quantity,
             "unitPrice":unitPrice,}
             productArray.push(newProduct);
-            addRow(productArray.length-1,newProduct);
+            addRow(productArray.length-1 + {{ $productEntries->count() }},newProduct);
 
-            console.log("inputProduct:"+inputProductValue);
-            console.log("quantity:"+quantity);
-            console.log("unitPrice:"+unitPrice);
+
         }
 
 
@@ -206,36 +242,6 @@
 
 
 
-
-
-
-
-
-
-
-
-    // $('#test-result').on('keyup', function () {
-    //     newTest.Articels = $(this).val()
-    //     console.log(newTest)
-
-    // })
-
-    // $('#test-name').on('change', function () {
-    //     newTest.name = $(this).val()
-    //     console.log(newTest)
-    // })
-
-    // $('#create-test').on('click', function () {
-    //     if (newTest.name == null) {
-    //         alert('No test selected!')
-    //     } else {
-    //         addRow(newTest)
-    //         $('#test-name').val('')
-    //         $('#test-result').val('')
-    //         $('.form-wrapper').addClass('hidden')
-    //     }
-    // })
-    //drop dowan data
 
 
     function addRow(order,obj) {
@@ -256,7 +262,7 @@
 
         </td>
     </tr>`
-    $('#tests-table').append(row)
+    $('#products-table').append(row)
 
     $(`#delete-${obj.id}`).on('click', deleteRow)
 
@@ -277,27 +283,11 @@
                 }, 2000)
     }
     function deleteRow(id) {
-                // var testid = $(this).data('testid')
-                // var deleteBtn = $(`#delete-${testid}`)
-                // var saveBtn = $(`#save-${testid}`)
-                // var cancelBtn = $(`#cancel-${testid}`)
-                // var confirmBtn = $(`#confirm-${testid}`)
-                // deleteBtn.addClass('hidden')
-                // saveBtn.addClass('hidden')
-                // cancelBtn.removeClass('hidden')
-                // confirmBtn.removeClass('hidden')
-
-
-
 
                 var row = $(`.test-row-${id}`)
                 row.remove()
     }
 
-    // function confirmDeletion() {
-    //             var testid = $(this).data('testid')
-    //             var row = $(`.test-row-${testid}`)
-    //             row.remove()
-    // }
+
 </script>
 @endsection

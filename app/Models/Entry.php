@@ -20,7 +20,7 @@ class Entry extends Model
     protected $guarded = [];
 
 
-    public function productsEntries()
+    public function productEntries()
     {
         return $this->hasMany(ProductEntry::class,'entry_id');
     }

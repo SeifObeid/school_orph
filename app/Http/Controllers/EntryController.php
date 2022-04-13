@@ -6,7 +6,8 @@ use App\Models\Entry;
 use App\Models\Product;
 use App\Models\ProductEntry;
 use App\Models\Supplier;
-use Request;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Redirect;
 use App\Classes\MainCategories;
 
@@ -60,19 +61,19 @@ class EntryController extends Controller
 
 // products
         $newEntry= Entry::firstOrCreate([
-    'invoice_number' => Request::all()["invoiceNumber"],
-    'date' => Request::all()["entryDate"],
-    'supplier_id' => Request::all()["supplier"],
-    'note' => Request::all()["note"],
+    'invoice_number' => $request->all()["invoiceNumber"],
+    'date' => $request->all()["entryDate"],
+    'supplier_id' => $request->all()["supplier"],
+    'note' => $request->all()["note"],
     'user_id' => auth()->id(),
-    'main_category_id'=> MainCategories::$main_categories[Request::segment(1)],
+    'main_category_id'=> MainCategories::$main_categories[$request->segment(1)],
         ]);
 
         //["products"][i][inputProductValue] ===>product id
         //["products"][i][quantity] ===>quantity
         //["products"][i][unitPrice] ===>unitPrice
-        if(Request::all()["products"] ?? false){
-            foreach(Request::all()["products"] as $product){
+        if($request->all()["products"] ?? false){
+            foreach($request->all()["products"] as $product){
             ProductEntry::updateOrCreate([
                'quantity' => $product["quantity"],
                'price' =>$product["unitPrice"] ,
@@ -85,7 +86,7 @@ class EntryController extends Controller
         }
 
 
-         return Redirect::route(Request::segment(1).".entries.index");
+         return Redirect::route($request->segment(1).".entries.index");
 
     }
 
@@ -94,9 +95,10 @@ class EntryController extends Controller
     {
 
 
-        $entry = Entry::with("supplier","productsEntries.product")->find($id);
+        $entry = Entry::with("supplier","productEntries.product")->find($id);
 
-         $products = $entry->productsEntries;
+         $products = $entry->productEntries;
+
        // dd($products);
         return view('core.entries.entry-show',['entry' => $entry, 'products' => $products]);
 
@@ -107,12 +109,41 @@ class EntryController extends Controller
 
 
                 //$supplier = Supplier::where('id',$r equest->id)->delete();
-        $entry = Entry::find(Request::all()["entryId"])->delete(); // if we want softCascadeDelete
+        $entry = Entry::find($request->all()["entryId"])->delete(); // if we want softCascadeDelete
 
 
 
 
         return Response()->json($entry);
+    }
+    public function edit( $id)
+    {
+
+        $entry = Entry::with("supplier","productEntries.product")->find($id);
+        $currentURL = request()->segment(1);
+
+        $products = Product::where('main_category_id', MainCategories::$main_categories[$currentURL])->get();
+
+        $productEntries = $entry->productEntries;
+
+    //    dd($productEntries);
+       $suppliers = Supplier::all();
+        return view('core.entries.entry-edit',['entry' => $entry, 'productEntries' => $productEntries,'products' => $products,'suppliers' => $suppliers]);
+
+    }
+
+     public function update(Request $request)
+    {
+        //
+        $Entry = array(
+
+        "invoice_number"=>$request->input("invoiceNumber"),
+        "date"=>$request->input("entryDate"),
+        "supplier_id"=>$request->input("supplier"),
+        "note"=>$request->input("note")
+    );
+         Entry::find($request->input("entryId"))->update($Entry);
+        return Redirect::route(request()->segment(1).".entries.index");;
     }
 
 }

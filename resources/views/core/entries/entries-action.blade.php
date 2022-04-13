@@ -2,7 +2,7 @@
     class="edit btn btn-success edit">
     تفاصيل
 </a>
-<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit"
+<a data-toggle="tooltip" href="{{ route(Request::segment(1).'.entry.edit',['id'=>$id]) }}" data-original-title="Edit"
     class="edit btn btn-warning edit">
     تعديل
 </a>

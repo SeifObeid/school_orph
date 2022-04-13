@@ -37,7 +37,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text">المورد</span>
                     <div class="d-flex align-items-center p-2">
-                        {{ $entry->supplier_id }}
+                        {{ $entry->supplier->name }}
 
                     </div>
 

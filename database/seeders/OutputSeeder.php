@@ -24,6 +24,8 @@ class OutputSeeder extends Seeder
                 'user_id' => '3',
                 'main_category_id' => '8',
                 'employee_id' => '1',
+                'sub_category_id' => '2',
+
 
             ],
             [
@@ -34,6 +36,8 @@ class OutputSeeder extends Seeder
                 'user_id' => '3',
                 'main_category_id' => '8',
                 'employee_id' => '1',
+                'sub_category_id' => '2',
+
             ],
             [
                 'note' => 'we are in 3',
@@ -43,6 +47,8 @@ class OutputSeeder extends Seeder
                 'user_id' => '3',
                 'main_category_id' => '8',
                 'employee_id' => '1',
+                'sub_category_id' => '2',
+
 
             ],
         ];

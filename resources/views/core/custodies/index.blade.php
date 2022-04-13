@@ -25,6 +25,7 @@
                         <th> الرقم الخاص بالقطعة </th>
                         <th> اسم القطعة </th>
                         <th>المتعهد</th>
+                        <th>الفرع</th>
                         <th> الحالة</th>
                         <th>العمليات</th>
                     </tr>
@@ -56,6 +57,7 @@
                             { data: 'custody_id', name: 'custody_id' },
                             { data: 'product_name', name: 'product_name' },
                             { data: 'employee_name', name: 'employee_name' },
+                            { data: 'sub_category_name', name: 'sub_category_name' },
                             { data: 'destroyed', name: 'destroyed' },
                             {data: 'action', name: 'action', orderable: false},
                             ],

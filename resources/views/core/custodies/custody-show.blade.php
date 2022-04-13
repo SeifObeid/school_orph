@@ -86,7 +86,20 @@
 
 
                 <div class="card card-body mb-4">
+                    @if($productOutput->destroyed == 0)
+                    <div class="d-flex justify-content-between">
+                        <div>
 
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#destroy">
+                                أتلاف</button>
+
+                        </div>
+                        <div><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#changeCustody">نقل العهدة</button></div>
+
+                    </div>
+                    @endif
                     <!-- Data Table -->
                     <table class="table ">
                         <thead>
@@ -111,7 +124,6 @@
                                 <td>{{isset($custody->end_date)==true ?$custody->end_date:"---" }}</td>
                             </tr>
 
-
                             @endforeach
 
                             @endif
@@ -132,5 +144,116 @@
 
 
 
+<!-- Modal destroy -->
+<div class="modal fade" id="destroy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">أتلاف عهدة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ؟ ({{ $productOutput->custody_id }})
 
+                هل تريد اتلاف
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا، أغلق</button>
+                <button type="button" class="btn btn-danger" id="destoryButton">نعم أتلف</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal change Custody -->
+<div class="modal fade" id="changeCustody" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    dir="rtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">نقل العهدة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span> الى من تريد نقل العهدة؟</span>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">اختر الموظف</span>
+
+                    <input class=" form-control" list="select_employee" id="employee" placeholder="اختر موظف">
+                    @if($employees->count()>0)
+                    <datalist id="select_employee">
+                        @foreach ($employees as $employee)
+                        <option data-customvalue={{ $employee->id }} value="{{ $employee->name }}">
+                            @endforeach
+                    </datalist>
+                    @endif
+                    <input type='hidden' name="employee" value="" id="employeeInput">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا، أغلق</button>
+                <button type="button" class="btn btn-success" id="changeCustodyButton">
+                    نعم، أنقل العهدة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+    $(document).ready( function () {
+                $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                });
+        $( "#destoryButton" ).click(function() {
+            $.ajax({
+                type:'PUT',
+                url: "{{ route(Request::segment(1).'.custodies.updateDestroyed')}}",
+                data: {id:'{{ $productOutput->custody_id }}' },
+
+                success: (data) => {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function(data){
+
+                }
+            });
+        });
+
+        $( "#changeCustodyButton" ).click(function() {
+
+            var employee = $('#employee').val();
+            var employeeValue= $('#select_employee [value="' + employee + '"]').data('customvalue');
+            if(employeeValue == undefined){
+                alert(" ادخل موظف")
+            }
+            else{
+                $.ajax({
+                type:'POST',
+                url: "{{ route(Request::segment(1).'.custodies.changeCustody')}}",
+                data: {employeeId:employeeValue, id:'{{ $productOutput->id }}' },
+
+                success: (data) => {
+                console.log(data);
+                location.reload();
+                },
+                error: function(data){
+
+                }
+                });
+                console.log(employeeValue);
+            }
+
+            });
+
+
+   });
+
+</script>
+@endpush

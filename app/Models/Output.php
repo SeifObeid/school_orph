@@ -21,4 +21,8 @@ class Output extends Model
     {
         return $this->hasMany(ProductOutput::class);
     }
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
 }

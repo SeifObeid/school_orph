@@ -4,12 +4,13 @@
 @section("content")
 
 <div class="wrapper">
-    <div class="container sub-main-title mt-4 mb-4 pt-3">
-        مخرج جديد
-    </div>
+    <div class="container sub-main-title-edit mt-4 mb-4 pt-3">
+        تعديل على مخرج </div>
     <div class="container " style="direction: rtl">
-        <form method="POST" action="./output" id="outputForm">
+        <form method="POST" action="{{ route(Request::segment(1).'.output.update') }}" id="outputForm">
             @csrf
+            @method('put')
+            <input type='hidden' name="outputId" value="{{ $output->id }}">
             <div class="row d-flex flex-wrap justify-content-around">
                 <div class="col-lg-3 col-md-6">
 
@@ -17,7 +18,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="order_id">رقم الطلب</span>
                         <input type="text" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="order_id" name="order_id">
+                            aria-describedby="order_id" name="order_id" value="{{ $output->order_id }}">
                     </div>
 
                 </div>
@@ -25,14 +26,16 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">التاريخ</span>
                         <input type="date" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="output_date" id="output_date" name="output_date">
+                            aria-describedby="output_date" id="output_date" name="output_date"
+                            value="{{ $output->date }}">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="input-group mb-3">
                         <span class="input-group-text">الى الموظف</span>
 
-                        <input class=" form-control" list="select_employee" id="employee" placeholder="اختر المورد">
+                        <input class=" form-control" list="select_employee" id="employee" placeholder="اختر المورد"
+                            value="{{ $output->employee->name }}">
                         @if($employees->count()>0)
                         <datalist id="select_employee">
                             @foreach ($employees as $employee)
@@ -49,7 +52,7 @@
                         <span class="input-group-text">الفرع</span>
 
                         <input class=" form-control" list="select_sub_category" id="subCategory"
-                            placeholder="اختر المورد">
+                            value="{{ $output->subCategory->name }}" placeholder="اختر المورد">
                         @if($subCategories->count()>0)
                         <datalist id="select_sub_category">
                             @foreach ($subCategories as $subCategory)
@@ -68,7 +71,7 @@
                         <span class="input-group-text" id="note">ملاحظات</span>
 
                         <textarea class="form-control" placeholder="اكتب الملاحظات هنا" name="note" id="note"
-                            style="height: -20px"></textarea>
+                            style="height: -20px">{{ $output->note }}</textarea>
                     </div>
                 </div>
 
@@ -170,7 +173,48 @@
                                 </tr>
                             </thead>
                             <hr>
-                            <tbody id="tests-table" name="productTable"></tbody>
+                            <tbody id="tests-table" name="productTable">
+                                @if($productOutputs->count()>0)
+                                @foreach ($productOutputs as $index => $productOutput)
+
+                                <tr scope="row" class="test-row-{{ $index }}" name=products[{{ $index }}][]>
+                                    <input type='hidden' name=products[{{ $index }}][inputProductValue]
+                                        value="{{ $productOutput->inputProductValue }}">
+                                    <input type='hidden' name=products[{{ $index }}][quantity]
+                                        value="{{ $productOutput->quantity }}">
+                                    <input type='hidden' name=products[{{ $index }}][productOutputId]
+                                        value="{{ $productOutput->id }}">
+                                    @if(!is_null($productOutput->custody_id))
+                                    <input type='hidden' name=products[{{ $index }}][custody_id]
+                                        value='{{ $productOutput->custody_id }}'>
+
+
+                                    @endif
+
+
+                                    <td>{{ $index }}</td>
+                                    <td>{{ $productOutput->product->product_name }}</td>
+
+                                    <td>{{ $productOutput->quantity }}</td>
+                                    @if(!is_null($productOutput->custody_id))
+                                    <td>{{ $productOutput->custody_id }}</td>
+                                    @else
+                                    <td> ---</td>
+                                    @endif
+
+                                    <td>
+                                        <button class=" btn btn-sm btn-danger" type="button"
+                                            onclick="deleteRow({{ $index }})" data-testid={{ $index }}
+                                            id="delete-{{ $index }}">حذف</button>
+
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endif
+
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -178,7 +222,7 @@
 
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
-                    <button id="saveEntryButton" class="save-entry-button">حفظ</button>
+                    <button id="saveOutputButton" class="save-entry-button">حفظ</button>
                 </div>
             </div>
         </form>
@@ -197,15 +241,13 @@
                 }
             });
             // jQuery methods go here...
-            $("#saveEntryButton").on("click",function(e){
-
+            $("#saveOutputButton").on("click",function(e){
             var employee = $('#employee').val();
             var employeeValue= $('#select_employee [value="' + employee + '"]').data('customvalue');
 
 
             var subCategory = $('#subCategory').val();
             var subCategoryValue= $('#select_sub_category [value="' + subCategory + '"]').data('customvalue');
-
 
             if(employeeValue==undefined  ){
 
@@ -306,7 +348,7 @@
                     }
                     // console.log(newProduct);
                     productArray.push(newProduct);
-                    addRow(productArray.length-1,newProduct);
+                    addRow(productArray.length-1 + {{  $productOutputs->count()}} ,newProduct);
 
                     // console.log("inputProduct:"+inputProductValue);
                     // console.log("quantity:"+quantity);
@@ -328,7 +370,7 @@
                     }
                     // console.log(newProduct);
                     productArray.push(newProduct);
-                    addRow(productArray.length-1,newProduct);
+                    addRow(productArray.length-1+ {{  $productOutputs->count()}},newProduct);
             }
             else{
                 alert("أملاء كل الفراغات")
