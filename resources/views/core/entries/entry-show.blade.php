@@ -123,14 +123,19 @@
 
         <div class="d-flex flex-row-reverse bd-highlight">
             <div class="p-2 bd-highlight">
-                <button id="saveEntryButton" class="save-entry-button">طباعة محضر الضبط</button>
+                <button id="saveEntryButton" class="save-entry-button" onclick="printPDF()">طباعة محضر الضبط</button>
             </div>
         </div>
 
     </div>
 </div>
 
-
+<script>
+    function printPDF(){
+        url = "{{ route('kindergarten.sub-category.getPDF',['id' => $entry->id]) }}";
+        window.open(url, '_blank').focus();
+    }
+</script>
 
 
 @endsection

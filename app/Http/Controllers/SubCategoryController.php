@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Classes\MainCategories;
+use App\Models\Employee;
+use Dompdf\Dompdf;
+// use Barryvdh\DomPDF\Facade\Pdf;
+
+use Illuminate\Support\Facades\View;
+use ArPHP\I18N\Arabic;
+
 
 class SubCategoryController extends Controller
 {
@@ -109,5 +116,62 @@ class SubCategoryController extends Controller
          $subCategory = SubCategory::where('id',$request->id)->delete();
 
         return Response()->json($subCategory);
+    }
+    public function getPDF($id){
+                    // instantiate and use the dompdf class
+
+            $employees = Employee::all()->toArray();
+            // dd($employees);
+            $viewhtml = View::make('core.pdf.insurance', ["employees"=>$employees])->render();
+             $arabic = new Arabic();
+            $p = $arabic->arIdentify($viewhtml);
+
+            for ($i = count($p)-1; $i >= 0; $i-=2) {
+                $utf8ar = $arabic->utf8Glyphs(substr($viewhtml, $p[$i-1], $p[$i] - $p[$i-1]));
+                $viewhtml = substr_replace($viewhtml, $utf8ar, $p[$i-1], $p[$i] - $p[$i-1]);
+            }
+
+            $dompdf = new Dompdf();
+
+         ;
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('Courier');
+            $dompdf->setOptions($options);
+            $dompdf->setPaper('A4');
+            // error_log($options->getFontDir());
+            // error_log("wiw");
+            $dompdf->loadHtml($viewhtml);
+            $dompdf->add_info('Title', 'Your meta title');
+
+
+
+
+
+
+
+
+
+        //     // Render the HTML as PDF
+            $dompdf->render();
+
+        //     // Output the generated PDF to Browser
+            $dompdf->stream('invoice.pdf',array('Attachment'=>0));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

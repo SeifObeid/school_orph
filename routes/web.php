@@ -8,6 +8,7 @@ use App\Http\Controllers\OutputController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
 
 /*
@@ -25,6 +26,7 @@ Route::get('/', function () {
     // return view('land-app');
         return Redirect::route("carpentry.index");
 });
+
 
 Route::get('/dashboard', function () {
     // return view('dashboard');
@@ -498,6 +500,8 @@ Route::prefix('kindergarten')->middleware(['auth'])->group(function () {
 
 
         });
+
+        Route::get('getPDF/{id}', [SubCategoryController::class, 'getPDF'])->name("kindergarten.sub-category.getPDF");
 });
 Route::prefix('kitchen')->middleware(['auth'])->group(function () {
         Route::get('', function(){
